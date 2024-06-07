@@ -6,7 +6,7 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\Auth\OwnerLoginController;//new
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,4 +43,8 @@ Route::middleware('auth')->group(function () {
 Route::post('/simpan-karyawan', [KaryawanController::class, 'simpanKaryawan'])->name('simpan-karyawan');
 
 require __DIR__.'/auth.php';
+
+// New owner login route
+Route::get('owner/login', [OwnerLoginController::class, 'showLoginForm'])->name('owner.login');
+Route::post('owner/login', [OwnerLoginController::class, 'login']);
 

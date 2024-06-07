@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight print:hidden">
             {{ __('Laporan') }}
         </h2>
     </x-slot>
@@ -12,23 +12,31 @@
                     <h3 class="text-lg font-semibold mb-4">Daftar Absensi</h3>
                     <form action="{{ route('laporan.filter') }}" method="post">
                         @csrf
-                        <div class="flex space-x-4">
-                            <div class="w-1/3">
-                                <label for="tanggal_dari" class="block text-sm font-medium text-gray-700">Tanggal Dari:</label>
-                                <input type="date" name="tanggal_dari" id="tanggal_dari" value="{{ request()->get('tanggal_dari') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                            </div>
-                            <div class="w-1/3">
-                                <label for="tanggal_sampai" class="block text-sm font-medium text-gray-700">Tanggal Sampai:</label>
-                                <input type="date" name="tanggal_sampai" id="tanggal_sampai" value="{{ request()->get('tanggal_sampai') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                            </div>
-                            <div class="w-1/3">
-                                <button type="submit" class="mt-2 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    Filter
-                                </button>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div>
+                                    <label for="tanggal_dari" class="block text-sm font-medium text-gray-700">Tanggal Dari:</label>
+                                    <input type="date" name="tanggal_dari" id="tanggal_dari" value="{{ request()->get('tanggal_dari') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="tanggal_sampai" class="block text-sm font-medium text-gray-700">Tanggal Sampai:</label>
+                                    <input type="date" name="tanggal_sampai" id="tanggal_sampai" value="{{ request()->get('tanggal_sampai') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="nama_karyawan" class="block text-sm font-medium text-gray-700">Nama Karyawan:</label>
+                                    <input type="text" name="nama_karyawan" id="nama_karyawan" value="{{ request()->get('nama_karyawan') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                </div>
+                                <div class="flex items-end justify-end">
+                                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Terapkan
+                                    </button>
+                                    <a href="{{ route('laporan.index') }}" class="ml-2 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Refresh
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </form>
-                    <!-- pemisah form -->
                     <div class="mt-8"></div>
                     @if($absensi->count() > 0)
                     <table class="min-w-full border-collapse table-auto">
