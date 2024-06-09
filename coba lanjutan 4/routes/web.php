@@ -45,6 +45,8 @@ Route::post('/simpan-karyawan', [KaryawanController::class, 'simpanKaryawan'])->
 require __DIR__.'/auth.php';
 
 // New owner login route
-Route::get('owner/login', [OwnerLoginController::class, 'showLoginForm'])->name('owner.login');
-Route::post('owner/login', [OwnerLoginController::class, 'login']);
-
+Route::post('/owner/login', [OwnerLoginController::class, 'login'])->name('owner.login');
+Route::get('/owner/dashboard', [OwnerLoginController::class, 'dashboard'])->name('owner.dashboard')->middleware('auth');
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');

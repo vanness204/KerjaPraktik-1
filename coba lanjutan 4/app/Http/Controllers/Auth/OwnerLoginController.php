@@ -7,21 +7,23 @@ use Illuminate\Support\Facades\Auth;
 
 class OwnerLoginController extends Controller
 {
-    public function showLoginForm()
-    {
-        return view('auth.owner-login');
-    }
-
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $credentials = $request->only('email', 'password');
 
+        if (Auth::attempt($credentials)) {
+            // Authentication passed, redirect to owner dashboard
+            return redirect()->route('owner.dashboard')->with('success', 'Berhasil login sebagai owner!');
+        }
 
+        // Authentication failed
         return back()->withErrors([
-            'email' => __('The provided credentials do not match our records.'),
-        ])->onlyInput('email');
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    public function dashboard()
+    {
+        return view('dashboardOwner');
     }
 }
